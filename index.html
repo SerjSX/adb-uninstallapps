@@ -11,6 +11,18 @@
             <h1>Uninstall Apps with ADB</h1>
             <em>Source: <a href="https://www.xda-developers.com/uninstall-carrier-oem-bloatware-without-root-access/" target="_blank">https://www.xda-developers.com/uninstall-carrier-oem-bloatware-without-root-access/</a> + my own additions at the end</em>
         </div>
+        <nav class="table-of-content">
+            <div class="group1">
+                <a href="#step1">Step 1: Enabling USB Debugging</a>
+                <a href="#step2">Step 2: Interfacing phone with ADB</a>
+                <a href="#step3">Step 3: Finding the name of packages to uninstall</a>
+                <a href="#step4">Step 4: Uninstalling bloatware/apps</a>
+            </div> 
+            <div class="group2">
+                <a href="#note1">Note 1: Re-install uninstalled app(s)</a>
+                <a href="#note2">Note 2: My additions</a>
+            </div>
+        </nav>
         <main>
             <section class="contents">
                 <div class="warning">
@@ -19,7 +31,7 @@
                     It's best not to mess with some core apps like the dialer, messages, camera, etc., and only uninstall the apps you consider bloatware.</p>
                 </div>
 
-                <div class="content">
+                <div class="content" id="step1">
                     <header><span class="step-design">Step 1:</span> Enabling USB Debugging on your phone</header>
                     <ol>
                         <li>Open the Settings app on your phone and scroll down to About Phone.</li>
@@ -29,7 +41,7 @@
                     </ol>
                 </div>
 
-                <div class="content">
+                <div class="content" id="step2">
                     <header><span class="step-design">Step 2:</span> Interfacing your phone with ADB</header>
                     <ol>
                         <li>Plug your phone into your computer and change the USB settings from Charge only mode to File transfer (MTP) mode.</li>
@@ -42,7 +54,7 @@
                     </ol>
                 </div>
 
-                <div class="content">
+                <div class="content" id="step3">
                     <header><span class="step-design">Step 3:</span> Finding the name of the packages to uninstall</header>
                     <ol>
                         <li>In the command prompt/terminal window, enter adb shell and hit enter.</li>
@@ -57,7 +69,7 @@
                         There's also App Manager from F-Droid that has similar functionalities.</p>
                 </div>
 
-                <div class="content">
+                <div class="content" id="step4">
                     <header><span class="step-design">Step 4:</span> Uninstalling the bloatware</header>
                     <p>This is the command you need to use to uninstall a system app:</p>
                     <code>pm uninstall -k --user 0 NameOfPackage</code>
@@ -69,7 +81,7 @@
                         Alternatively, there's an even easier way to bring back an app you uninstalled, as we explain in the section at the end.</p>            
                 </div>
 
-                <div class="content note">
+                <div class="content note" id="note1">
                     <header><span class="step-design">Note 1:</span> How to re-install an uninstalled app</header>
                     <p>If you've deleted an app by mistake or a secondary app is force closing because it's dependent on an app you uninstalled, you can re-install the app using the following set of commands:</p>
                     <code> adb shell</code>
@@ -81,7 +93,7 @@
                     </p>
                 </div>
 
-                <div class="content">
+                <div class="content" id="note2">
                     <header><span class="step-design">Note 2: </span> My additions</header>
                     <p>You can see what system apps are safe to remove from couple of threads found on XDA Forums. Users have put time and effort to test and inform you which ones are safe to remove, below are some of these posts.</p>
 

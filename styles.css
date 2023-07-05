@@ -1,3 +1,10 @@
+@media (prefers-reduced-motion: no-preference) {
+    * {
+        scroll-behavior: smooth;
+    }
+}
+
+
 body {
     font-family:Arial, Helvetica, sans-serif;
 }
@@ -15,7 +22,37 @@ section {
     padding-bottom: 10px;
     border-bottom: 3px solid lightgray;
     width: 100%;
-    
+}
+
+nav div:first-of-type {
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+nav div {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+
+nav div:last-of-type {
+    padding-bottom: 30px;
+    border-bottom: 3px solid lightgray;
+
+}
+
+nav a {
+    color: #4d4e53;
+    text-decoration: none;
+    padding: 10px;
+    margin-right: 5px;
+    background-color: lightgray;
+    border-radius: 5px;
+}
+
+nav a:hover {
+    background-color: rgba(211, 211, 211, 0.699);
 }
 
 .warning {
@@ -61,4 +98,19 @@ code {
 .note {
     border-top: 2px solid lightgray;
     padding-top: 50px;
+}
+
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: black;
+        color: white;
+    }
+
+    a {
+        color: lightgray;
+    }
+
+    nav a {
+        color: #333438;
+    }
 }
