@@ -53,3 +53,8 @@ code {
     padding-left: 10px;
     padding-right: 15px;
 }
+
+.note {
+    border-top: 2px solid lightgray;
+    padding-top: 50px;
+}
