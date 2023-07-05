@@ -1,0 +1,50 @@
+body {
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+section {
+    font-size: 1.05em;
+}
+
+.top-bar {
+    margin: 0;
+    margin-left: -5px;
+    margin-top: -10px;
+    margin-bottom: 30px;
+    padding: 5px;
+    padding-bottom: 10px;
+    border-bottom: 3px solid lightgray;
+    width: 100%;
+    
+}
+
+.warning {
+    font-weight: bold;
+}
+
+.content {
+    margin-top: 50px;
+}
+
+header {
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+.step-design {
+    font-size: 1.25em;
+    padding-right: 5px;
+}
+
+ul li {
+    padding-bottom: 10px;
+}
+
+ul li:first-of-type {
+    padding-top: 5px;
+}
+
+footer {
+    font-size: 0.9em;
+    opacity: 0.7;
+}

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="styles.css">
+        <title>Uninstall Apps with ADB</title>
+    </head>
+    <body>
+        <div class="top-bar">
+            <h1>Uninstall Apps with ADB</h1>
+            <em>Source: <a href="https://www.xda-developers.com/uninstall-carrier-oem-bloatware-without-root-access/" target="_blank">https://www.xda-developers.com/uninstall-carrier-oem-bloatware-without-root-access/</a> + my own additions at the end</em>
+        </div>
+        <main>
+            <section class="contents">
+                <div class="warning">
+                    <p>Note: Uninstalling some system apps can be dangerous and may result in force closes or even a bricked device. 
+                    An app may depend on another app to work so be careful about what you uninstall and the consequences it may have.
+                    It's best not to mess with some core apps like the dialer, messages, camera, etc., and only uninstall the apps you consider bloatware.</p>
+                </div>
+
+                <div class="content">
+                    <header><span class="step-design">Step 1:</span> Enabling USB Debugging on your phone</header>
+                    <ol>
+                        <li>Open the Settings app on your phone and scroll down to About Phone.</li>
+                        <li>Tap on the Build Number seven times to enable Developer Options.</li>
+                        <li>Go back to the Settings menu and go to System > Developer Options.</li>
+                        <li>Enable USB Debugging.</li>
+                    </ol>
+                </div>
+
+                <div class="content">
+                    <header><span class="step-design">Step 2:</span> Interfacing your phone with ADB</header>
+                    <ol>
+                        <li>Plug your phone into your computer and change the USB settings from Charge only mode to File transfer (MTP) mode.</li>
+                        <li>Ensure that you have ADB installed on your computer.</li>
+                        <li>On your computer, browse to the directory where ADB is installed. Hold the Shift key and right-click on the name of the directory and select Open command/PowerShell window here.</li>
+                        <li>If you're using a Mac, launch a Terminal window and navigate to the ADB directory using <code>cd "path to the directory"</code> (without the "").</li>
+                        <li>Now, type in <code>adb devices</code> and hit enter.</li>
+                        <li>You will see the system is starting the ADB daemon. If this is your first time running ADB, you'll see a prompt on your phone asking you to authorize a connection with the computer. Grant it.</li>
+                        <li>Now, if you re-run the <code>adb devices</code> command, the terminal will print the serial number of your device. If you see a string of numbers, you're ready to move on.</li>
+                    </ol>
+                </div>
+
+                <div class="content">
+                    <header><span class="step-design">Step 3:</span> Finding the name of the packages to uninstall</header>
+                    <ol>
+                        <li>In the command prompt/terminal window, enter adb shell and hit enter.</li>
+                        <li>Then, use the following command:<br>
+                            <code>pm list packages | grep '<.OEM/Carrier/App Name>'</code>
+                            <br>without the dot before OEM.</li>
+                        <li>This will list all the OEM and carrier apps installed on your device.</li>
+                    </ol>
+                    <p>Alternatively, you can also use an app called App Inspector from the Play Store to know the package names of all the installed apps on your phone. 
+                        Install the app, select the app you want to uninstall, and the package name will be listed there. Note the package names of all the apps you want to uninstall.
+                        You can get App Inspector from here, it's free: <a href="https://play.google.com/store/apps/details?id=com.ubqsoft.sec01" target="_blank">https://play.google.com/store/apps/details?id=com.ubqsoft.sec01</a>. 
+                        There's also App Manager from F-Droid that has similar functionalities.</p>
+                </div>
+
+                <div class="content">
+                    <header><span class="step-design">Step 4:</span> Uninstalling the bloatware</header>
+                    <p>This is the command you need to use to uninstall a system app:</p>
+                    <code>pm uninstall -k --user 0 NameOfPackage</code>
+
+                    <p>Note that NameOfPackage needs to be replaced with the full package name, without any " or <>. You'll also need to execute the command for every app you want to uninstall.</p>
+                    <p class="warning">As a word of warning, uninstalling system applications can be dangerous so please know what you're getting rid of before you complete these steps. 
+                        Failing to do so could result in your phone becoming unusable until you perform a factory reset. Of course, by removing any given system application, 
+                        another system application that may depend on it may also break so be careful what you remove. If something goes wrong, you can always perform a factory reset to bring things back to the way they were. 
+                        Alternatively, there's an even easier way to bring back an app you uninstalled, as we explain in the section at the end.</p>            
+                </div>
+
+                <div class="content">
+                    <header><span class="step-design">Note 1:</span> How to re-install an uninstalled app</header>
+                    <p>If you've deleted an app by mistake or a secondary app is force closing because it's dependent on an app you uninstalled, you can re-install the app using the following set of commands:</p>
+                    <code> adb shell</code>
+                    <code> pm install-existing NameOfPackage </code>
+                    <p>This works because applications truly aren't fully uninstalled from your device. They are just being uninstalled for the current user (user 0 is the default/main user of the phone). 
+                        That's why, if you omit the <code>--user 0</code> and <code>-k</code> part of the uninstall command, the command won't work. These two flags respectively specify the system app will only be uninstalled for the current user 
+                        (and not all users, which is something that requires root access) and that the cache/data of the system application will be preserved (which can't be removed without root). Therefore, even if you uninstall a system app using this method, 
+                        you can still receive official OTA updates from your carrier or OEM.
+                    </p>
+                </div>
+
+                <div class="content">
+                    <header><span class="step-design">Note 2: </span> My additions</header>
+                    <p>You can see what system apps are safe to remove from couple of threads found on XDA Forums. Users have put time and effort to test and inform you which ones are safe to remove, below are some of these posts.</p>
+
+                    <ul>
+                        <li>
+                            For EMUI:
+                            <ul>
+                                <li><a href="https://forum.xda-developers.com/t/guide-list-of-bloatware-on-emui-safe-to-remove.3700814/" target="_blank">https://forum.xda-developers.com/t/guide-list-of-bloatware-on-emui-safe-to-remove.3700814/</a></li>
+                                <li><a href="https://forum.xda-developers.com/t/guide-list-of-bloatware-on-emui-12-debloater-debloat-safe-to-remove-crap-system-apps.4567991/" target="_blank">https://forum.xda-developers.com/t/guide-list-of-bloatware-on-emui-12-debloater-debloat-safe-to-remove-crap-system-apps.4567991/</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            For OneUI:
+                            <ul>
+                                <li><a href="https://forum.xda-developers.com/t/guide-oneui-3-1-complete-debloating-guide-bloatware-list-improve-battery-performance.4348195/" target="_blank">https://forum.xda-developers.com/t/guide-oneui-3-1-complete-debloating-guide-bloatware-list-improve-battery-performance.4348195/</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            For MIUI:
+                            <ul>
+                                <li><a href="https://forum.xda-developers.com/t/tutorial-miui-14-bloatware-removal-list.4584575/" target="_blank">https://forum.xda-developers.com/t/tutorial-miui-14-bloatware-removal-list.4584575/</a></li>
+                                <li><a href="https://forum.xda-developers.com/t/safely-removing-unnecessary-system-bloatware-apps-from-xiaomi-mi-10i-without-root.4216393/" target="_blank">https://forum.xda-developers.com/t/safely-removing-unnecessary-system-bloatware-apps-from-xiaomi-mi-10i-without-root.4216393/</a></li>
+                            </ul>
+                            <p class="warning">Use the software from the second source at your own risk.</p>
+                        </li>
+                        <li>
+                            Universal <span class="warning">(Use software at your own risk)</span>:
+                            <ul>
+                                <li><a href="https://forum.xda-developers.com/t/2022-07-03-v0-5-1-universal-android-debloater.4069209/" target="_blank">https://forum.xda-developers.com/t/2022-07-03-v0-5-1-universal-android-debloater.4069209/</a></li>
+                                <li>You can see the lists that the Universal Android Debloater software uses here: <a href="https://gitlab.com/W1nst0n/universal-android-debloater/-/tree/master/lists" target="_blank">https://gitlab.com/W1nst0n/universal-android-debloater/-/tree/master/lists</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+
+            </section>
+
+        </main>
+
+        <footer>Programmed by <a href="https://github.com/SerjSX" target="_blank">SerjSX</a></footer>
+    </body>
+</html>
